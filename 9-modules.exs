@@ -71,8 +71,8 @@ end
 
 IO.puts(ModuleWithAttributes.not_a_jedi())
 
-# Modules are compiled as atoms, so we can do:
-# But this is just in order to better understand how to call Erlang modules (as follows)
+# Modules are compiled as atoms, so we can do the following
+# (this is just in order to better understand how to call Erlang modules (as follows))
 IO.puts(:"Elixir.ModuleWithAttributes".not_a_jedi())
 
 # As said, Erlang modules can be used in Elixir without prior configurations
