@@ -1,3 +1,5 @@
+# Keywork lists and maps are dictionaries
+
 # Keywork lists are typically used when passing options to functions
 # They can have more entries with the same key
 # Also, values are ordered
