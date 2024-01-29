@@ -29,6 +29,7 @@ IO.puts("List 1 is: #{inspect(my_list)}")
 IO.puts("\n--- INIT STREAM ---")
 
 # Instead, streams are lazy enumerable, meaning that the next value is calculated only when needed
+# and only after the previous one has been through ALL the transformations defined in the stream
 my_stream =
   1..5
   # Doubling each value
@@ -51,7 +52,7 @@ IO.puts("This is the inspected stream: #{inspect(my_stream)}")
 
 # Now, when actually consuming the stream (for example by converting to a list), each stream element will be consumed
 #
-# Also, not the order of IO.puts:
+# Also, note the order of IO.puts:
 # They're obviously called before this final IO.puts, but EACH ELEMENT IS TOTALLY CONSUMED before continuing with the next one
 # So Stream.map/2 is called for index 0, then Stream.filter for index 0
 # Then Stream.map/2 is called for index 1, then Stream.filter for index 1
@@ -74,7 +75,11 @@ stream_to_write =
   |> Stream.map(&"#{&1}\n")
 
 # This is a bit tricky, but what does is opening a file as stream, and writing `stream_to_write` into the other
-Enum.into(stream_to_write, File.stream!("files/14-streams.txt"))
+# Also, I initially used `Enum.into` as suggested on stackoverflow, but on Elixir forum this is another possibility
+# I do not know if using `Stream.into` makes any difference in how writing is handled
+Stream.into(stream_to_write, File.stream!("files/14-streams.txt"))
+# Anyway, this `.run()` allows the stream to be consumed, because `Stream.into` returns a Stream itself, so it's lazy
+|> Stream.run()
 
 # Reading the same file
 first_line_reversed =
