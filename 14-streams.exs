@@ -97,3 +97,20 @@ first_line_reversed =
   |> Stream.take(1)
 
 IO.puts(Enum.at(first_line_reversed, 0))
+
+# To create an infite stream:
+#
+# Stream.cycle cycles infinitely on an enumerable
+# Stream.repeatedly creates an infinite stream where each value is the result of a function call
+# Stream.iterate does the same, but the function is called with the previous stream element as input
+
+# Stream.unfold allows to map a stream element, while also passing a custom value to the next function call.
+
+# Stream.resource takes a first function, a mapper function (that works the same as Stream.unfold), and a third function
+# First function is called when the stream asks for the first value, the lates is called with the latest value of the stream
+# This allows for example to open/close files
+
+# DIFFERENCE Enumerable protocol and Collectable protocol
+# An Enumerable is a collection in which you can iterate each element
+# A collectable is a collection in which you can add values, for example when using Enum.into
+# Collectables are lists (but not ranges, they cannot be extended), streams and others
