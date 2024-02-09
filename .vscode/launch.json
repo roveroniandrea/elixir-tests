@@ -1,0 +1,31 @@
+{
+    // Usare IntelliSense per informazioni sui possibili attributi.
+    // Al passaggio del mouse vengono visualizzate le descrizioni degli attributi esistenti.
+    // Per altre informazioni, visitare: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "mix_task",
+            "name": "mix (Default task)",
+            "request": "launch",
+            // Need to override default projectDir
+            "projectDir": "issues_project"
+        },
+        {
+            "type": "mix_task",
+            "name": "mix test",
+            "request": "launch",
+            "task": "test",
+            "taskArgs": [
+                "--trace"
+            ],
+            "startApps": true,
+            // Need to override default projectDir
+            "projectDir": "issues_project",
+            "requireFiles": [
+                "test/**/test_helper.exs",
+                "test/**/*_test.exs"
+            ]
+        }
+    ]
+}

@@ -1,3 +1,4 @@
 {
+    // Override project dir in order for Elixis extension to work on "issues project" project
     "elixirLS.projectDir": "issues_project"
 }
