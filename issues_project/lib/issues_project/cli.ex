@@ -9,13 +9,14 @@ defmodule IssuesProject.CLI do
 
   def run(argv) do
     parse_args(argv)
+    |> process()
   end
 
   @doc """
   `argv` can be -h or --help, which returns :help
 
   Otherwise it is a github username, project name and (optionally) the number of entries to format.
-  Returns a tuple of `{user, project, count}`, or _help if help was given
+  Returns a tuple of `{user, project, count}`, or :help if help was given
   """
   def parse_args(argv) do
     # Using an Elixir base library to parse cli arguments
@@ -26,22 +27,36 @@ defmodule IssuesProject.CLI do
     # The result is a triple consisting in a keyword list of parsed switches, remaining arguments (not switches), and invalid options (switches?)
     parsed = OptionParser.parse(argv, switches: [help: :boolean], aliases: [h: :help])
 
-    case parsed do
-      # Help switch is passed
-      {[help: true], _, _} ->
-        :help
+    decode_parsed_args(parsed)
+  end
 
-      # Full arguments
-      {_, [github_username, github_project, issues_count], _} ->
-        {github_username, github_project, String.to_integer(issues_count)}
+  defp decode_parsed_args(args)
+  # Help switch is passed
+  defp decode_parsed_args({[help: true], _, _}), do: :help
+  # Full arguments
+  defp decode_parsed_args({_, [github_username, github_project, issues_count], _}),
+    do: {github_username, github_project, String.to_integer(issues_count)}
 
-      # Or without count, so default to @default_count
-      {_, [github_username, github_project], _} ->
-        {github_username, github_project, @default_count}
+  # Or without count, so default to @default_count
+  defp decode_parsed_args({_, [github_username, github_project], _}),
+    do: {github_username, github_project, @default_count}
 
-      # Otherwise something is wrong, defaults to help
-      _ ->
-        :help
-    end
+  @doc """
+  Handles :help command,
+  or retrieves infos from Github
+  """
+  def process(cmds)
+
+  def process(:help) do
+    IO.puts("""
+    Usage: issuesProject <github_username> <github_project> [issues_count | #{@default_count}]
+    """)
+
+    # Exit the program (this causes a Dialized warning because it cannot find any path that returns some value)
+    System.halt(0)
+  end
+
+  def process({github_username, github_project, issues_count}) do
+    raise "Not implemented"
   end
 end
