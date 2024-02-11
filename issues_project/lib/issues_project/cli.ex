@@ -56,7 +56,7 @@ defmodule IssuesProject.CLI do
     System.halt(0)
   end
 
-  def process({github_username, github_project, issues_count}) do
-    raise "Not implemented"
+  def process({github_username, github_project, _issues_count}) do
+    IssuesProject.GithubIssues.fetch(github_username, github_project)
   end
 end

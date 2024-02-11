@@ -18,7 +18,7 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/issues_project>.
 
-# Mix
+## Mix
 Mix is a command line utility that manages Elixir projects. It comes installed along Elixir
 - `mix help` Shows help
 - `mix new <path>` Creates a new project under path
@@ -29,6 +29,7 @@ Mix is a command line utility that manages Elixir projects. It comes installed a
 - `lib/` Project source directory, with an initial top level module already added
 - `mix.exs` Project's configuration options
 - `test/` Folder for storing test files
+- `deps/` Folder for installed dependencies
 
 ## Project modules
 ### IssuesProject.CLI and Elixir conventions
@@ -39,6 +40,20 @@ Also, Elixir modules should be under `lib/<project_name>`, so `lib/issues_projec
 
 ## Testing
 Mix comes with a testing framework called `ExUnit`. Default `<project_name>_test.exs` file acts as a boilerplate.
-Tests are defined under `test/` folder. Naming should be `test/<module_name>_test.exs`. Note `.exs` file
+Tests are defined under `test/` folder. Naming should be `test/<module_name>_test.exs`. Note `.exs` file.
+
 Use `mix test` to run tests, or VS Code task. Optionally `--trace` flag for showing a complete list of runned tests.
-In case an assertion fails, Mix shows the left and right side of the code that failed (for example an equality check)
+In case an assertion fails, Mix shows the left and right side of the code that failed (for example an equality check).
+
+Also, functions can manually be called by using `-e` flag, like so: `mix run -e 'IssuesProject.CLI.run(["roveroniandrea", "elixir-tests", "5"])'`. (tip: pipe with `|> IO.inspect() to log the returned value`).
+
+Alternatively, use iex: `iex -S mix` runs mix before going interactive. Then you have the interpreted at your project level.
+
+## Hex
+Hex is mix's package manager.
+Dependencies are defined in `IssuesProject.MixProject.deps`, which returns a list of tuples. They are installed into `deps/` folder.
+
+- `mix deps` shows infos about the project dependencies, for example lists what is not installed
+- `mix deps.get` downloads dependencies
+
+There's an additional file called `mix.lock` that stores infos about currently installed dependencies, like package-lock.json.
